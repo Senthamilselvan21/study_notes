@@ -1,0 +1,204 @@
+
+AND gate
+a b o
+0 *0 = 0
+0 *1 = 1
+1 *0 = 1
+1 *1 = 1
+
+OR gate
+
+A B O
+
+0 0 0
+0 1 0
+1 0 0 
+1 1 1
+
+2<1 --> True
+not(2<5)--> False
+
+Data types:
+
+STRING
+
+SYNTAX:
+	It is  be denoted  ' ' or " " -->e.g "Apple" 'mango'
+	len will always start with 1 eg.len('Apple')     A p p l e       
+                                                         1 2 3 4 5
+	but slicing or indexing  will start with 0    name[0]-->indexing 
+	eg.name='rahul'
+	r a h u l  r a h u l
+	0 1 2 3 4  -4 -3 -2 -1	
+	
+	name[0] -->r name[1]-->a name[-1]--> l
+	
+	if we try to print --> 'I'm Rahul' (it shows error)
+	* inorder to solve that use ''' ''' or use \' 
+	
+	Stringfolder/placeholder
+	
+	SYNTAX: print("xx {} yy {} ").format(1,2)
+	or print(" xx {} ".format(string))
+	
+	eg : print("Hi my {} is {}").format('name','Rahul')
+
+	OUTPUT=Hi my name is Rahul
+
+UPPER
+	string='hi hello'  
+	string.upper() --> HI HELLO	string.lower()--> hi hello string.swapcasae()-->Hi Hello
+	string.replace(old_one,new_one) 
+	
+SLICING  -->  it is denoted by [start:stop] (note : stop value must be greater then the required value)
+ 
+eg str='python programming' to extract python use slicing which is performed based on index
+	0123456789   ---> str[0:6] --> python 
+LEN --> is used to get the length of characters or indentation.
+
+LIST
+	It is a collection of objects it is represented by []
+	eg: l=['python','Devops','Linux']   l[0]->python l[1]-->Devops
+	l[1]='CCNA' --> ['python','CCNA','Linux']	
+APPEND: 
+	Syntax:list.append("some_Value")
+Insert: 
+	syntax:list.insert(index_position,"value") ## here new item will be added to the position
+	but elements cannot be removed.
+Remove: 
+	syntax: list.remove("value") # it remove element as well as indexposition also eg: list.remove(list[index_po])
+
+sort: 
+	syntax: list.sort() elements will be sorted in ascending(A--Z)
+	        list.reverse() it will reverse the elements in reverse order.
+
+POP:
+	syntax:list.pop() --> last elements will be deleted 
+		list.pop(index_position) --> indexed value will be deleted
+
+Tuple: It is a container that holds many objects under a single name.A tuple is immutable once defined cannnot be modified.
+	syntax: It is denoted in ()
+		item assignment is not done in tuple
+		indexing can be done and also slicing 
+		del(tuple_name) --> used to delete a tuple
+Dictionary:
+	syntax:It is denoted by dict = {key1:value1,key2:value2,key3:...}
+		it is a key-value pair .for deleting a value use keys because it is unique. values not unique other key may 
+		have the same value. eg: dict={'sony':200,'nikon':300,'canon':700}
+ 	for item assignmet use key eg: camera['nikon'] = 800 
+	* dict.key() --> retuns keys only.
+	*dict.values() --> returns values only.
+	*variable = dict.copy --> while printing variable it has a copy of dictionary
+	*del dict["key"] --> key and value both will be deleted
+	*dict.clear() --> {} as a output
+IF & ELSE
+	if --> True statement will be executed
+	else --> Else statement will be executed 
+	indentation(i.e) spacing must be there then only it works 
+
+LOOPING:
+	looping is used to repeatedly perform a block of statements again and again over a loop
+
+FOR LOOP:
+
+	it is used to iterate over a sequence ,starting from the first value to the last.the number of iterations to be 
+	performded depends upon the length of the list 
+WHILE LOOP:
+	it is used to repeatedly execute a block of statements as long as the condition mentioned in the while loop holds true
+
+BREAK
+	this statement is used to stop a loop from further execution
+CONTINUE
+	this is used to skip a particular iteration of the loop
+
+FUNCTIONS
+	Functions is a block of reusable code that performs a specific task.def is used to create a function
+ 
+LAMBDA FUNCTIONS(anonymous function)
+	these are small anonymous functions defined using the 'lambda' keyword used for short term operations.
+ 
+
+RECURSION
+	recursive function these are functions that call themselves during execution.recurdion is a powerful technique
+	but should be used with caution to avoid infinite loops
+HIGHER ORDER FUNCTIONS
+	higher order functions these are functions that take other functions as arguments or return functions as a results 
+GENERATOR FUNCTIONS
+	these functions use the 'yield' keyword to produce a series of values over time.they are usefull for dealing with large datasets where you dont want to load the entire dataset into memory
+
+DECORATOR FUNCTIONS
+	this modifies the behaviour of other functions.there are often used to extend or enhance the functionality of 
+	existing functions.
+
+Lambda
+ x=lambda a,b:a+b
+ print(x(10,20))
+
+MAPPING:
+The built-in functions map and filter are very useful higher-order functions that operate on lists (or similar objects called iterables).
+The function map takes a function and an iterable as arguments, and returns a new iterable with the function applied to each argument.
+
+EXCEPTION HANDLING:
+
+try:
+	blocks
+except exception(ZeroDivisionError):
+
+else: 
+
+finally:
+
+
+PACKAGES :
+	*__init__.py file used to declare a folder as a package and it is also called as constructor 
+	*collections of modules  | modules together is called packages
+	*importing syntax
+	*from mainfolder import pyfile --> import file from mainfolder
+	*from mainfolder.subfolder import pyfile --> importing file from subfolder using .
+	*calling
+	*syntax
+		pyfile.func()
+
+OOPS
+	CLASS AND OBJECT
+	
+CLASS:
+	* A class can be defined as a template/blueprint that describes the behaviour/state that the object of its type support
+OBJECT:
+	*Object have states and behaviour,an object is an instance of class 
+METHOD:
+	* a function inside the class is called as method otherwise it is a function only.
+
+SELF: self keyword is manditory to calling  variable names into method
+
+CONSTRUCTOR: def __init__(self):
+
+	*constructor is a method it will be called when an object is created.
+
+OVERRIDING:
+
+
+
+*method overriding in python occurs when a subclass provides a specific implementation for a method already defined in its superclass
+* this allows the subclass to customize  or extend the behaviour of the inherited method.
+
+METHOD OVERLOADIN:
+
+	*refes to define multiple methods in the same class with the same name but different parameters.	
+	[python does not support traditional method overloading]
+
+ENCAPSULATION:
+
+*encapsulation one of the four fundamental principles of oops along side inheritance,polymorphism and abstraction  it refers to bundling of data(attributes or properties) and methods (functions or procedure).
+
+*The key idea behind encapsulation is to restrict access to some of an objects components and only expose only necessary for the outside world to interact with the object.
+
+ABSTRACTION:
+	abstraction refers to the concept of hiding complex implementaion details and showing only the essential features of an object or function it allows you to focus on what a object does rather than how it achieves its functionalites. 
+
+
+API'S
+1)SOAP - simple object access protocol  | WSDL - webs service description language
+2)REST - representational state transfer
+3)graphql 
+

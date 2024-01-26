@@ -1,0 +1,41 @@
+permissions
+public permission off
+bucket policy
+policy generator
+
+policy-s3 bucket policy
+effect-allow
+principal-*
+actions-get object
+arn -arn:aws:s3:::newbucket6374/*
+add statement
+generate policy
+
+{
+  "Id": "Policy1704163856518",
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "Stmt1704163811793",
+      "Action": [
+        "s3:GetObject"
+      ],
+      "Effect": "Allow",
+      "Resource": "arn:aws:s3:::newbucket6374/*",
+      "Principal": "*"
+    }
+  ]
+}
+
+
+copy the above policy paste it in the bucket policy
+
+copy the object and paste it in the browser to check whether it accessible or not 
+
+
+replication 
+
+got s3 bucket 
+management replication rules
+
+create replication rule

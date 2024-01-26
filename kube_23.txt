@@ -1,0 +1,143 @@
+ubuntu@control-plane:/etc/kubernetes$ sudo su
+root@control-plane:/etc/kubernetes# kubectl get nodes
+The connection to the server localhost:8080 was refused - did you specify the right host or port?
+root@control-plane:/etc/kubernetes# kubectl get nodes
+The connection to the server localhost:8080 was refused - did you specify the right host or port?
+root@control-plane:/etc/kubernetes# exit
+exit
+ubuntu@control-plane:/etc/kubernetes$ cd
+ubuntu@control-plane:~$ kubectl get nodes
+NAME            STATUS   ROLES                  AGE     VERSION
+control-plane   Ready    control-plane,master   5m24s   v1.20.0
+kube-slave      Ready    <none>                 88s     v1.20.0
+ubuntu@control-plane:~$ ls
+devlab
+ubuntu@control-plane:~$ cd devlab/
+ubuntu@control-plane:~/devlab$ kubectl get pods
+No resources found in default namespace.
+ubuntu@control-plane:~/devlab$ ls
+pod11.yaml
+ubuntu@control-plane:~/devlab$ rm -rf pod11.yaml
+ubuntu@control-plane:~/devlab$ ls
+ubuntu@control-plane:~/devlab$ vi pod12.yaml
+ubuntu@control-plane:~/devlab$ kubectl apply -f pod12.yaml
+pod/my-pod created
+ubuntu@control-plane:~/devlab$ kubectl get pods
+NAME     READY   STATUS    RESTARTS   AGE
+my-pod   1/1     Running   0          8s
+ubuntu@control-plane:~/devlab$ kubectl get svc
+NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   11m
+ubuntu@control-plane:~/devlab$ vi svcl.yaml
+ubuntu@control-plane:~/devlab$ kubectl apply -f svcl.yaml
+pod/my-pod configured
+ubuntu@control-plane:~/devlab$ kubectl get svc
+NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   12m
+ubuntu@control-plane:~/devlab$ vi svcl1.yaml
+ubuntu@control-plane:~/devlab$ kubectl apply -f svcl1.yaml
+service/my-service created
+ubuntu@control-plane:~/devlab$ kubectl get svc
+NAME         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+kubernetes   ClusterIP   10.96.0.1        <none>        443/TCP        14m
+my-service   NodePort    10.105.100.157   <none>        80:30936/TCP   3s
+ubuntu@control-plane:~/devlab$ kubectl get nodes
+NAME            STATUS   ROLES                  AGE   VERSION
+control-plane   Ready    control-plane,master   14m   v1.20.0
+kube-slave      Ready    <none>                 11m   v1.20.0
+ubuntu@control-plane:~/devlab$ vi pod34.yaml
+ubuntu@control-plane:~/devlab$ kubectl apply -f pod34.yaml
+pod/worldcup created
+ubuntu@control-plane:~/devlab$ kubectl get pods
+NAME       READY   STATUS              RESTARTS   AGE
+my-pod     1/1     Running             0          8m28s
+worldcup   0/1     ContainerCreating   0          8s
+ubuntu@control-plane:~/devlab$ kubectl get pods --show-labels
+NAME       READY   STATUS    RESTARTS   AGE     LABELS
+my-pod     1/1     Running   0          9m15s   app=my-app
+worldcup   1/1     Running   0          55s     class=pods,env=development
+ubuntu@control-plane:~/devlab$ kubectl get pods -l env=development
+NAME       READY   STATUS    RESTARTS   AGE
+worldcup   1/1     Running   0          93s
+ubuntu@control-plane:~/devlab$ kubectl get nodes
+NAME            STATUS   ROLES                  AGE   VERSION
+control-plane   Ready    control-plane,master   24m   v1.20.0
+kube-slave      Ready    <none>                 20m   v1.20.0
+ubuntu@control-plane:~/devlab$ kubectl label nodes kube-slave hardware=t2-medium
+node/kube-slave labeled
+ubuntu@control-plane:~/devlab$ vi pod56.yaml
+ubuntu@control-plane:~/devlab$ kubectl apply -f pod56.yaml
+pod/nodelabels created
+ubuntu@control-plane:~/devlab$ kubectl get pods
+NAME         READY   STATUS    RESTARTS   AGE
+my-pod       1/1     Running   0          18m
+nodelabels   1/1     Running   0          8s
+worldcup     1/1     Running   0          9m50s
+ubuntu@control-plane:~/devlab$ kubectl describe pods nodelabels
+Name:         nodelabels
+Namespace:    default
+Priority:     0
+Node:         kube-slave/172.31.25.92
+Start Time:   Thu, 23 Nov 2023 05:26:45 +0000
+Labels:       env=production
+Annotations:  <none>
+Status:       Running
+IP:           10.32.0.6
+IPs:
+  IP:  10.32.0.6
+Containers:
+  mycon23:
+    Container ID:  docker://5517222d5c5964dd7e3df3c45766b32d35f77908aef6f84bcb9b513283c7291a
+    Image:         ubuntu
+    Image ID:      docker-pullable://ubuntu@sha256:2b7412e6465c3c7fc5bb21d3e6f1917c167358449fecac8176c6e496e5c1f05f
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /bin/bash
+      -c
+      while true; do echo Hello-faiza; sleep 5 ; done
+    State:          Running
+      Started:      Thu, 23 Nov 2023 05:26:48 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-kswnm (ro)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
+Volumes:
+  default-token-kswnm:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-kswnm
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  hardware=t2-medium
+Tolerations:     node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                 node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  25s   default-scheduler  Successfully assigned default/nodelabels to kube-slave
+  Normal  Pulling    24s   kubelet            Pulling image "ubuntu"
+  Normal  Pulled     22s   kubelet            Successfully pulled image "ubuntu" in 2.249513014s
+  Normal  Created    22s   kubelet            Created container mycon23
+  Normal  Started    22s   kubelet            Started container mycon23
+ubuntu@control-plane:~/devlab$ vi rcl.yaml
+ubuntu@control-plane:~/devlab$ kubectl apply -f rcl.yaml
+replicationcontroller/myreplica1 created
+ubuntu@control-plane:~/devlab$ kubectl get rc
+NAME         DESIRED   CURRENT   READY   AGE
+myreplica1   3         3         2       8s
+ubuntu@control-plane:~/devlab$ kubectl get pods
+NAME               READY   STATUS    RESTARTS   AGE
+my-pod             1/1     Running   0          23m
+myreplica1-cpds5   1/1     Running   0          34s
+myreplica1-hm6pf   1/1     Running   0          34s
+myreplica1-qk4pt   1/1     Running   0          34s
+nodelabels         1/1     Running   0          5m39s
+worldcup           1/1     Running   0          15m
+ubuntu@control-plane:~/devlab$

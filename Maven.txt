@@ -1,0 +1,16 @@
+sudo su -> cd /opt 
+wget https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz
+tar -xvzf apache-maven-3.9.6-bin.tar.gz
+cd apache-maven-3.9.6-bin
+pwd  --> copy path 
+****************************************
+find / -name java
+readlink -f /usr/bin/java  ---> to find the java path 
+***************************************
+cd /root
+ls -a 
+vi .bash_profile
+****************************************
+JAVA_HOME='/usr/lib/jvm/java-17-amazon-corretto.x86_64'                                                     M2_HOME='opt/maven'                                                                                         M2='opt/mavne/bin'                                                                                          PATH=$PATH:$HOME/bin:$JAVA_HOME:$M2_HOME:$M2                                                                                                                                                                            export PATH          
+****************************************
+source .bash_profile -->command

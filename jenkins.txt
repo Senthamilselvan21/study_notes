@@ -1,0 +1,154 @@
+configuring ubuntu
+
+sudo su - ---> switch to root user 
+vi /etc/hostname ---> to change the hostname
+init 6 --> used to reboot the system then only the hostname will be changed 
+
+
+
+install java 
+sudo apt-get update
+sudo apt install openjdk-11-jdk ---> to install the java package
+java -version --> used to check whether java is installed or not and also we can see version of java
+
+install jenkins
+
+*sudo wget -O /usr/share/keyrings/jenkins-keyring.asc \
+  https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+*echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+*sudo apt-get update
+*sudo apt-get install jenkins
+
+*jenkins --version ---> used to get the jenkins version
+*default port - 8080
+*public ip:8080 ---> to login
+
+*jenkins 
+username - admin
+password - admin
+mail - admin@gmail.com
+
+jenkins GUI 
+
+create newitem
+choose freestyle then ok
+and then go to build and then choose terminal and then write something eg: echo "hi" >> file.txt
+then apply save
+create build
+
+
+cd /var/lib/jenkins ----> default workspace
+cd workspace
+cd Demo11(it a folder where we created in jenkins)
+ls -- > shows all the files inside the dir.
+
+Upstream and downstream
+
+everytime we have to create only upstream 
+select the project to provide upstream 
+go to configure
+go to build trigger 
+go to build after another
+then give the project name whatever before that 
+then apply and save
+
+user policy 
+
+matrix based policy - used to provide permission to all the jobs eg:if we give read and create permission it will apply to all the jobs 
+project based policy - used to provide permission for a particular job not for all the jobs.
+
+1)matrix based policy
+
+*In dashbord go to manage jenkins
+*go to users
+*create user *** don't forget username and passsword
+*go to manage jenkins--> security --> Authorization 
+* select matrix based security
+*in that add user and then give whatever permission we need
+* apply and save 
+* login as user which you given permissions 
+* you can see the actions that you given as a restriction in security section.
+
+2)Project based 
+
+*In dashbord go to manage jenkins
+*go to users
+*create user *** don't forget username and passsword
+*go to manage jenkins--> security --> Authorization 
+*select project based policy
+*in that add user and then give whatever permission we need
+*apply and save 
+*go to dashboard
+*select item press down arrrow
+*Project based matrix policy
+*add user and then give permission for particular user.
+
+
+MASTER SLAVE
+
+
+
+
+
+
+
+
+
+
+for port modification
+
+1)go to manage jenkins
+2)go to security
+3) under agent 
+4)TCP set as fixed and give any port like 3030
+
+
+for password authentication 
+
+
+1)go to manage jenkins
+2)install plugins
+3) install agent setup
+4)go to instance
+5)sudo su
+6)vi /etc/ssh/sshd_config
+6)Password authentication ---> yes
+7)save
+8)service sshd restart 
+
+for slave creation
+
+1)create new instance named as slave
+2)rename the hostname as jenkins-slave --> vi /etc/hostname or hostnamectl set-hostname jenkins-sla
+
+
+1)manage jenkins
+2)system
+3)changeip for the current instance ip
+4)save
+5)go to manage jenkins
+6)go to nodes create new and then give slave path as /slavepath 
+7)provide tag must be unique dont forgot and then save 
+8)go to node(javaapp) under unix section and then copy the first line from http
+9)go to jenkins-slave machine change dir to slavepath
+10)wget http:-- hit enter
+11)install java using apt-update then apt-get install openjdk-11-jdk
+12)again go to node(javaapp)under unix section copy the another two lines 
+13)then paste it in the slave machine note(you must be under slavepath)
+14)connection succeed
+15)go to jenkins and create a job
+16)under job configuration select restrict where the project can be done option
+17)in that give the label name i.e 7th step
+18)and give some script and then apply save
+19)perform build 
+20)if success it stored on slave machine under dir //slavepath/workspace/
+
+
+
+  
+
+
+
+

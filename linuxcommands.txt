@@ -1,0 +1,133 @@
+LINUX COMMANDS
+
+ls-listing the files
+date-to view the date[syntax:monthdatehourminutesyear.seconds mmddhhmmyyyy.ss]
+cal-used to view calander
+<-------------------------------------------->
+init0 - shutdown
+init6 - restart
+<------------------------------------------------>
+uname -a - used to view all the details
+uname -o - to see the operating system name
+uname -n - to see the username
+hostname - to see the username
+whoami-its shows current user
+<------------------------------------------------>
+arch - gives architecture of the system
+tty-to find the current terminal 
+chvt terminal_no - used to shift virtual terminal [ctrl+alt+f1.......f6]
+<--------------------------------------------------------------------------->
+vlock -a - used to lock all the system but background will running
+<--------------------------------------------------------------------------->
+ctrl+shift+n- creates a new terminal
+ctrl+shift+t - creates new within a terminal
+<------------------------------------------------------------------------------>
+script filename - to store all the terminal outputs
+whereis filename - used to find the location of the file
+double times tab - to view all the commands
+tput bold - change text to bold
+echo $?-checks whether the previous command is right or wrong
+du -sh directory or file - gives the size of the dir/file
+<------------------------------------------------------------------------------>
+echo $0 - know shell type [login]
+echo $SHELL- know shell type[reboot]
+cat /etc/shells - view all the shells
+cat /etc/passwd - view all the user  details
+cat /etc/shadow - view password details
+chsh shellname - to change a shell
+chsh -s /bin/shellname username - to set a shell for particular user
+reset - to resets and starts a fresh terminal
+<--------------------------------------------------------------------------------->
+whatis , man , info ,command --help,pinfo - used to know details about commands
+<--------------------------------------------------------------------------------->
+su - username-switch user
+useradd username - to add user
+userdel -r username - to delete a User
+passwd username - to set or change a passwd
+usermod -L username - to lock user
+usermod -U username - to unlock user
+usermod -u UID username - provides default id while creating
+passwd -l username - to lock passwd
+passwd -u username - to unlock passwd
+passwd -S username - to know the status of passwd
+passwd -d username - to delete a passwd
+<----------------------------------------------------------------------------------->
+cat /etc/group -view all the details about groups
+groupadd name - to create a group
+gpasswd -M user1,user2 groupname - to add a user to a group for the first time
+gpasswd -a user group - to add a user to a group
+gpasswd -d user group - to delete a user from a group
+groupmod -g GID groupname - to change a GID to a existing user 
+groupadd -g GID groupname - to create a user with default GID
+<------------------------------------------------------------------------------------->
+vim /etc/sudoers - is a configuration file
+/bin -essential commands for both user and root
+/sbin -essential commasnds only for  root user
+vi sudo - in that file we can give  permission  to other users like root permissions
+after opening file then put shift+g - to go last line
+In that go to option Root allow to run any commands below that 
+give user ALL=(ALL) NOPASSWD: ALL #instead of giving all give certain commands like /usr/sbin/useradd
+Instead of giving separate user we can add all the users to a single group so we grant permission easily
+For that in Group heading
+%groupname ALL = /usr/sbin/useradd, NOPASSWD: ALL
+NOPASSWD: - use this we won't to give password all the time
+<------------------------------------------------------------------------------------------->
+touch filename - to create a file
+touch filename{0..10} - creates multiple files
+touch .file - to create a hidden file
+mkdir dirname - creates a  directory 
+mkdir dirname{1..20} - creates multiple directory
+mkdir .dirname - to create a hidden dir
+rm -rf * - used to remove all 
+rm -rf filename - to remove a file
+rm -rf dir - to remove a directory
+cp -r sourcefile/dir /destinationdir - to copy a file from onedir to another
+cp -r /dir/ * /dir - copy all the items from onedir to another
+mv sourcefile/dir /destinationdir - to move a file
+mv existname newname - to rename a file
+mv .file file - covert hidden to normal file
+vim -x filename - to set passwd for a file 
+inside vi :X - to delete a passwd by pressing double enter
+cat > file - to create and write something in a file
+cat >> file - to append operation
+ls -R /dir - to view the tree like structure
+l. - to list hidden files
+<------------------------------------------------------------------------------------------------->
+command && command && command - to run multiple commands (if one wrong other won't get)
+command ; command ; command  - to run multiple commands (if one wrong no issues)
+grep word - to get the particular string
+wc (-l>line -c>characteres -w>words) - for word count
+locate filename /dir- to find the file or a dir
+find / -name filename- to find a file or dir to that name
+find /dir -name filename-to find a file or dir to a particular dir
+find /dir -size -1k or 10mb - view files that is less than ik or greater than 10mb
+tar -cvzf filename.gz - to compress a file in gz extension
+tar -zxvf filename.gz - to decompress a file 
+tar -cvjf filename.bz2 - to compress a file below than that 
+tar -xvjf filename.bz2 - to decompress a file 
+ln file file1 file2 - to link a file (if we do modify in file all the files also modified and if deleted we can access another )
+ln -s file file1 file2 - to link a file (if we do modify in file all the files  modified and if deleted we cannot access another)
+export HISTTIMEFORMAT="%F %T" - used to assign date and time to the history file
+______________________________________________________________________________________________
+hostname 
+
+vi /etc/hostname - in that we have to change the hostname after doing this we must do restart
+sudo su - used to do switch user as a root
+ 
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+

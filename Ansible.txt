@@ -1,0 +1,50 @@
+Ansible 
+create two instances 
+
+Installation on master 
+ 
+sudo apt update
+sudo apt install software-properties-common
+sudo add-apt-repository --yes --update ppa:ansible/ansible
+apt install -y ansible=2.9*
+
+vi /etc/ansible/hosts
+# Ex 2: A collection of hosts belonging to the 'webservers' group--> under that 
+[devops] -->name
+54.255.233.180 --ip of slave 
+
+we have to go inside config file 
+vi /etc/ansible/ansible.cfg --> inthat file uncomment some lines
+inventory      = /etc/ansible/hosts --> remove # in that 
+sudo_user      = root --> remove # in that 
+save file 
+
+adduser ansible -->both machine  
+
+visudo 
+
+# User privilege specification --> in both machines 
+root    ALL=(ALL:ALL) ALL
+# Members of the admin group may gain root privileges
+%admin ALL=(ALL) ALL
+%ansible ALL=(ALL) NOPASSWD:ALL
+service sshd restart
+
+ssh publicip(slave_ip) -->in master login as a ansible user 
+if getting error as permission denied do below step
+ 
+vi /etc/ssh/sshd_config  --> in both machines
+public authencation yes
+password authencation yes
+service sshd restart
+
+******************************************************************************
+Note: in playbook install - present |uninstall - remove |start --started
+******************************************************************************
+open playbook 
+copy first part 
+paste to yaml file (playbook.yaml)
+ansible-playbook playbook.yaml
+
+ 
+ 

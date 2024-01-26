@@ -1,0 +1,8 @@
+region -- geographical area where the data centers are kept 
+availability zones -- same copies of data center with in the region 
+public vs private cloud
+
+
+here i started my first english practice writing skills
+
+i am woke up at 7.15,then brush my teeth and take a shower.

@@ -1,0 +1,154 @@
+sudo su
+vi /etc/hostname
+init 6
+
+Docker installation
+
+sudo apt-get update
+sudo apt-get install ca-certificates curl gnupg
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+
+apt install docker.io -y  --> install docker 
+docker --version --> version
+
+
+go to dockerhub and create a account
+
+in search bar type ubuntu
+docker pull ubuntu --> download ubuntu container 
+
+docker images  -->to see image is there or not 
+
+*eg:REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+ubuntu       latest    e4c58958181a   4 weeks ago   77.8MB
+
+docker login -->login to docker
+docker ps --> it shows running container
+docker ps -a --> it shows both running and stopped container 
+
+docker run -it --name tamil ubuntu:latest /bin/bash
+note:
+	exit -->whenever we want to exit the container write the command 
+	control+pq --> your are also in container and the container also runs
+	docker attach containerid ---> enter into container 
+	exit --> it left out from the container  
+	docker start container id -->to start the container 
+	docker attach contianerid --> enter into container   
+
+***********************************************************************
+Note :  gunicorn server --->python  tomact server -->JAVA for deployment
+************************************************************************
+
+Do all the steps in master machine
+
+we can create image by using docker file
+
+Various command in dockerfile
+
+
+From -->it is used to choose container base image (like ubuntu,redhat anything)
+ADD -->any url package to download syntax: ADD <source> <destination in container> (its like wget command) 
+NOTE:::[[ file which you want to add into image both the file and doocker in the same path]]
+
+eg: FROM ubuntu
+ADD. /var/www/html
+
+. -->current directory
+ubuntu --> base image
+
+RUN --> add some extra command on top of the container (add layer to the base image) (while creating image)
+
+eg: FROM ubuntu
+    RUN apt-get update
+    RUN apt-get -y install apache2
+    ADD. /var/www/html 
+CMD --> used to run commands on start of the conatiner (used at starting time)
+during running state of conatiner if you want to replace any container then we go for cmd (replacing services)
+
+ENTRYPOINT -->during running state of conatiner when you want to append any new version of container then we go for entrypoint
+(adding  one more services without changing it ) 
+ 
+ENV--> define environment variable 
+
+EXPOSE --> used to deploy in the tomcat server using default 8080 port number
+
+while creating docker file use D as --> Dockerfile
+1)docker build -t imagename .
+docker images
+docker ps
+docker run -it --name mycont 1)imagename:latest /bin/bash
+whereis apache2
+*************************************************************
+docker rmi -f dockerimage  --> to delete a image
+docker rm container --> to delete a container 
+*************************************************************
+*****In single image we can create multiple containers
+*****
+
+10/11/23
+
+docker_file.txt
+#create a directory 
+mkdir -m 777 app71
+#get into directory 
+cd app71
+#copy the war file jobs workspace to docker file location
+cp /var/lib/jenkins/workspace/Package/target/addressbook.war .
+#create a dockerfile
+touch dockerfile
+#get into inside the Dockerfile echo will pass value in docker file
+echo "
+#choose container based images
+FROM ubuntu:latest
+#update the images
+RUN apt-get update -y
+#install java 
+RUN apt install openjdk-11-jdk -y
+RUN apt-get install -y && apt-get install vim -y && apt-get install nano -y
+RUN apt-get update -y
+#download  tomcat
+Add  https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.83/bin/apache-tomcat-9.0.83.tar.gz /opt
+#Extract tomcat
+RUN tar -zxvf /opt/apache-tomcat-9.0.83.tar.gz
+#deploy war on tomcat
+COPY addressbook.war /apache-tomcat-9.0.83/webapps/
+#create port number
+EXPOSE 8080" >> dockerfile #>> means closing file
+#build image this because we have changed the visudo
+sudo docker build -t app:v1 .
+
+
+sudo su
+visudo
+jenkins ALL= NOPASSWD: ALL
+
+
+go to jenkins and create new item 
+*in execute shell paste the script
+
+docker run  -it --name anyname app:v1 /bin/bash
+
+push an image
+SYNTAX:
+*eg:REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+ubuntu       latest    e4c58958181a   4 weeks ago   77.8MB
+
+
+
+docker tag local-image:tagname new-repo:tagname
+*************************************************
+docker tag ubuntu:latest senthamilselvan/java_project :anyname(app1)
+*********************************************
+docker push new-repo:tagname
+
+
+

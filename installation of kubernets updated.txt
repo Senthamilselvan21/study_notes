@@ -1,0 +1,121 @@
+On master and slave both -- take ubuntu 20.0
+
+1 apt-get update -y
+2 sudo apt-get install ca-certificates curl gnupg
+3 sudo install -m 0755 -d /etc/apt/keyrings
+4 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+5 echo \
+  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+6 sudo apt-get update
+7 apt-get install docker.io -y
+8 service docker restart  
+9 swapoff -a
+10 systemctl enable docker
+11 apt-get update
+12 sudo apt-get install -y apt-transport-https ca-certificates curl
+13 curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring
+14 echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+15 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - 
+
+16 echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" >/etc/apt/sources.list.d/kubernetes.list
+
+17 apt-get update
+
+18 apt install kubeadm=1.20.0-00 kubectl=1.20.0-00 kubelet=1.20.0-00 -y 
+
+
+----------------------------------------------------------------------------------------------------------------- over 
+
+ON master only do the above commands
+-- 
+          kubeadm init --pod-network-cidr=192.168.0.0/16
+
+exit from root user login as a normal user 
+
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config  
+sudo chown $(id -u):$(id -g) $HOME/.kube/config 
+
+follow the steps which is reflected in master
+kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
+kubectl get nodes
+
+ON slave 
+----
+    join command reflected on masters
+
+before that create tcp port 6443 on both machines
+
+do this one in slave
+
+kubeadm join 172.31.22.108:6443 --token oi0l7y.6cpqk89i3e0mm0ms \
+    --discovery-token-ca-cert-hash sha256:cba3bacf1aa10f900dcb2bcf7914e15cf9d016091ee1772aec7373f03494d9cf
+
+
+
+
+
+
+
+if refused
+  -- on master
+cd /etc
+   89  ls
+   90  cd kubernetes/
+   91  ls
+   92  vi admin.conf
+   93  sudo vi admin.conf
+   94  sudo cat admin.conf
+
+
+
+
+
+node(slave)
+
+kubectl config view
+   60  cd /
+   61  ls
+   62  cd ~
+   63  ls
+   64  ls -a
+   65  ls -al
+   66  rm -rf .kube
+   67  mkdir .kube
+   68  ls -al
+   69  cd .kube/
+   70  ls
+   71  ls -al
+   72  vi config
+   73  rm -rf config
+   74  vi config
+   75  kubectl get pods
+   76  vi config
+   77  kubectl get pods
+   78  kubectl get nodes
+
+
+copy config file data which is under master kubernets copy content of admin.config then paste it in slave config then it will work 
+
+if slave not working----------
+
+kubeadm reset  -again want to run 
+
+systemctl restart kubelet
+---------------------------------------------------------------------------------------------------------------------------------------
+SLAVE
+
+if kubectl get nodes not work in slave 
+
+login as root
+kubeadm reset -->yes 
+
+
+
+
+
+

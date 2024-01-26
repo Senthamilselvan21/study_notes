@@ -1,0 +1,134 @@
+mkdir devlab
+cd devlab
+vi pod1.yaml -->copy paste the below lines into it 
+kubectl apply -f pod1.yaml
+kubectl get pods
+kubectl get pods --show-labels
+kubectl describe pods pod_name
+kubectl exec -it pod_name  -c  cont_name -- /bin/bash -->exec container 
+
+to host pod we use a network service named as nodeport
+
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+
+
+--------------------   10250 - security group
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+  labels:
+    app: my-app
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+
+
+
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: my-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: NodePort
+
+
+
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: ipl
+  labels:
+    env: development
+    class: pods
+spec:
+    containers:
+       - name: mycon007
+         image: ubuntu
+         command: ["/bin/bash", "-c", "while true; do echo Hello-sibi; sleep 5 ; done"]
+
+
+
+kubectl exec -it my-pod -c my-container -- /bin/bash
+
+kubectl get pods --show-labels  
+
+
+kubectl get pods -l env=development  --> what is there inside the label 
+
+kubectl get nodes -o wide  --> 
+
+kubectl label pods ipl myname=worldcup
+
+
+node selector
+
+cmd --> kubectl label nodes kubeslave hardware=t2-medium
+
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: nodelabels
+  labels:
+    env: development
+spec:
+    containers:
+       - name: mycon2
+         image: ubuntu
+         command: ["/bin/bash", "-c", "while true; do echo Hello-faiza; sleep 5 ; done"]
+    nodeSelector:                                         
+       hardware: t2-medium
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+kind: ReplicationController
+apiVersion: v1
+metadata:
+  name: myreplica
+spec:
+  replicas: 3
+  selector:
+    myname: worldcup
+  template:
+    metadata:
+      name: hurt
+      labels:
+        myname: worldcup
+    spec:
+     containers:
+       - name: c0009
+         image: ubuntu
+         command: ["/bin/bash", "-c", "while true; do echo goodmorning; sleep 5 ; done"]

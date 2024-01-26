@@ -1,0 +1,34 @@
+tomcat install
+
+go to official website
+https://tomcat.apache.org/download-90.cgi
+selet --> tar.gz copy install link address
+
+go to instance create dir opt 
+inside that put weget copied address(tar.gz)
+
+tar xf file -- > to decompress
+cd apache hit tab --> cd bin -->./start.sh
+
+go to instance cd opt cd apache cd conf 
+vi server.xml change port -- 4040
+
+*go to instance -->security_groups-->edit_inbound --> custom TCP --> 4040  --> save it 
+
+*cd conf --> find / -name context.xml --> copy manager full line --> vi pase it --> go to <Value before that <!-- ...... -->  --> 
+then copy the host-manager line --> vi paste it --> go to <Value before that <!-- ...... -->
+*cd bin --> ./shutdown.sh --> ./startup.sh
+
+*cd conf --> vi tomcatusers.xml --> go to last line -> paste it <role rolename="manager-gui"/> <role rolename="manager-script"/> <user username="admin" password="password" roles="manager-gui, manager-script"/>  -->wq! and quit
+
+*go to public_ip:4040 --> manager --> username-admin  --> password-password if it works leave it other wise check above step
+
+*go to jenkins using ip:8080 --> go to manage jenkins --> plugins --> deploy on container --> install it
+ 
+*create new item --> deploy-->freestye--> Source Code Management --> give git link --> Build Steps --> invoke top level maven 
+-->mymaven -->goal-->package --> 
+
+*Post-build Actions --> deploy war/ear on container --> WAR/EAR files --> **/*.war -->Context path --> any name -->Containers-->tomcat.x9
+--> Credentials --> add --> give tomacat username and password (description as my cred) --> save --> tomacturl -->ip:4040 --> go to  Source Code Management -->credential --> select (my cred) -->apply and save --> build
+
+*go to tomcat server login as manager -->you will see the project -->select and the application working fine

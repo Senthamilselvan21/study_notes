@@ -1,0 +1,28 @@
+#create a directory 
+mkdir -m 777 app71
+#get into directory 
+cd app71
+#copy the war file jobs workspace to docker file location
+cp /var/lib/jenkins/workspace/Package/target/addressbook.war .
+#create a dockerfile
+touch dockerfile
+#get into inside the Dockerfile echo will pass value in docker file
+echo "
+#choose container based images
+FROM ubuntu:latest
+#update the images
+RUN apt-get update -y
+#install java 
+RUN apt install openjdk-11-jdk -y
+RUN apt-get install -y && apt-get install vim -y && apt-get install nano -y
+RUN apt-get update -y
+#download  tomcat
+Add https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.82/bin/apache-tomcat-9.0.82.tar.gz /opt
+#Extract tomcat
+RUN tar -zxvf /opt/apache-tomcat-9.0.82.tar.gz
+#deploy war on tomcat
+COPY addressbook.war /apache-tomcat-9.0.82/webapps/
+#create port number
+EXPOSE 8080" >> dockerfile
+#build image this because we have changed the visudo
+sudo docker build -t app:v1 .
