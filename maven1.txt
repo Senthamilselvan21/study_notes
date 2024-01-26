@@ -1,0 +1,71 @@
+maven
+
+go to jenkins
+manage jenkins
+tools
+1)maven create one named as mymaven
+2)under git 
+give the instance git path
+
+
+go to instance log in 
+whereis git
+copy the path /usr/bin/git
+
+***********************************************************************
+Job Name		Goals 		Plugins		Output file	
+***************************************************************************
+Compile			compile		NA		pom.xml		Note; POM (Project object Model (it is depency file for Build Tool)
+Code Review		-P metrics pmd:pmd	PMD	target/pmd.xml	
+Unit Test		test		Junit		target/surefire-reports/*.xml	
+Package			package		package		Don’t use this one    .war .jar .ear	
+Deploy			package		Deploy to container	Context Path		dynamic Path of war **/*.war
+**************************************************************************************
+
+create one job
+based on the above table create jobs
+
+1)compile
+*under source code
+-->paste git link
+*build steps
+-->my maven
+--> goal == compile based on table
+
+2)code review
+*under source code
+-->paste git link
+Build after other projects are built
+-->compile
+*build steps
+-->my maven
+--> goal == -P metrics pmd:pmd
+
+3)unit test
+*under source code
+-->paste git link
+Build after other projects are built
+-->code review
+*build steps
+-->my maven
+--> goal == test
+*Post-build Actions
+-->Publish JUnit test result report
+-->target/surefire-reports/*.xml
+-->apply and save
+
+4)package
+*under source code
+-->paste git link
+Build after other projects are built
+-->unit test
+*build steps
+-->my maven
+--> goal == package
+-->apply save
+
+
+@go to manage jenkins --> plugins-->avaiPLug-->build pipeline -->install
+
+in dashboard --> create new using + icon -->Build Pipeline View -->my build pipeline-->Upstream / downstream config
+-->select compile -->Column Headers -->just build name and number -->apply and save.
