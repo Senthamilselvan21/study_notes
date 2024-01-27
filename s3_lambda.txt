@@ -1,0 +1,63 @@
+1.create s3 bucket
+2.create sns topic and subscription
+3.create lambda function
+  trigger-S3
+  destination-sns
+4.python code 
+******************************************************************************************
+import json
+import boto3
+
+def lambda_handler(event, context):
+    try:
+        # Log the entire event to understand its structure
+        print("Received event: " + json.dumps(event, indent=2))
+
+        # Retrieve information about the uploaded file from the S3 event
+        s3_event = event['Records'][0]['s3']
+        bucket_name = s3_event['bucket']['name']
+        object_key = s3_event['object']['key']
+
+        # Log information about the S3 event
+        print("Bucket Name: " + bucket_name)
+        print("Object Key: " + object_key)
+
+        # Construct the SNS message
+        message = {
+            'bucket': bucket_name,
+            'object_key': object_key,
+            'event_name': event['Records'][0]['eventName']
+        }
+
+        # Continue with the rest of the Lambda function...
+
+    except Exception as e:
+        print(f"Error: {str(e)}")
+        return {
+            'statusCode': 500,
+            'body': json.dumps(f'Error: {str(e)}')
+        }
+
+
+***********************************************************************
+5.select test and configure test event
+create new and paste it below
+
+{
+  "Records": [
+    {
+      "s3": {
+        "bucket": {
+          "name": "mybucket3938"
+        },
+        "object": {
+          "key": "*"
+        }
+      },
+      "eventName": "ObjectCreated:Put"
+    }
+  ]
+}
+
+
+6.upload a file into the bucket and then check whether you got a mail or not.
